@@ -1,5 +1,7 @@
 *.vs/
 Debug
 *.VC.db
-.vcxproj*
 *.vcxproj
+WordLinker/WordLinker.vcxproj
+WordLinker/WordLinker.vcxproj.filters
+WordLinker/WordLinker.vcxproj.user
