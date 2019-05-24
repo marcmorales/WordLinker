@@ -2,3 +2,5 @@
 Debug
 *.VC.db
 WordLinker/*.vcxproj
+WordLinker/*.filters
+WordLinker/*.user
