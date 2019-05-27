@@ -4,7 +4,7 @@
 WordLink::WordLink() : NewWord(" "), CurrentWord("Ant"){}
 
 // Setters
-void WordLink::SetNewWord(std::string PlayerNewWord) { NewWord = PlayerNewWord; }
+void WordLink::SetNewWord(FString PlayerNewWord) { NewWord = PlayerNewWord; }
 
 // Getters
-std::string WordLink::GetNewWord() {	return NewWord; }
+FString WordLink::GetNewWord() { return NewWord; }

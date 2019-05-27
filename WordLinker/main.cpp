@@ -2,16 +2,19 @@
 #include <string>
 #include "wordLinker.h"
 
+using int32 = int;
+using FText = std::string;
+
 void GameIntro();
 void PlayGame();
 
 void LogStatAndAskNewWord();
-std::string AskNewWord();
+FText AskNewWord();
 void LogStatusBar();
 
 WordLink WLink;
 
-int main()
+int32 main()
 {
 	GameIntro(); // TODO add some ASCII art
 
@@ -39,6 +42,11 @@ void GameIntro()
 void PlayGame()
 {
 	LogStatAndAskNewWord();
+	// TODO Verify NewWord from all the rules. (Valid letter, repeating word)
+		// TODO If valid, Log the stat and ask player for another word*
+		// TODO if not valid, check player stat
+			// TODO if player still has enough attempt, Log the stat and ask player for another word*
+			// TODO if player exhausted all attempts, run the game's game over function (still to be made).
 }
 
 void LogStatAndAskNewWord()
@@ -50,10 +58,10 @@ void LogStatAndAskNewWord()
 }
 
 // Waits for Player's input for the new word.
-std::string AskNewWord()
+FText AskNewWord()
 {
 	//set NewWord from player input.
-	std::string NewWord = "";
+	FText NewWord = "";
 	std::getline(std::cin, NewWord);
 	return NewWord;
 }
@@ -69,8 +77,8 @@ void LogStatusBar()
 	| Attempts: 2 | Words Submitted: ## |
 	Current word: Null || Next word:
 	*/
-	constexpr int ATTEMPTS = 2; // place holders
-	constexpr int WORDS_SUBMITTED = 5; // place holders
+	constexpr int32 ATTEMPTS = 2; // place holders
+	constexpr int32 WORDS_SUBMITTED = 5; // place holders
 
 	//status bar
 	std::cout << "-----------------------------------------" << std::endl;

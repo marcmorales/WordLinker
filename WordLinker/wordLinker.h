@@ -2,23 +2,27 @@
 #include <string>
 #include <vector>
 
+using int32 = int;
+using FString = std::string;
+
 class WordLink
 {
 public:
 	WordLink();
 	
 	// setters
-	void SetNewWord(std::string);
-	void SetCurrentWord(std::string);
+	void SetNewWord(FString);
+	void SetCurrentWord(FString);
 
 	// getters
-	std::string GetNewWord();
-	void GetCurrentWord(std::string);
+	FString GetNewWord();
+	void GetCurrentWord(FString);
 
 	void Reset(); // TODO reset the game when initialized and if the player chose to restart the game after winning or losing.
 
 
 private:
-	std::string NewWord;
-	std::string CurrentWord;
+	FString NewWord;
+	FString CurrentWord;
+
 };
