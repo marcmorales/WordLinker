@@ -1,18 +1,20 @@
 #include <iostream>
 #include <string>
+#include "wordLinker.h"
 
 void GameIntro();
 void PlayGame();
 
 void LogStatAndAskNewWord();
-void AskNewWord();
+std::string AskNewWord();
 void LogStatusBar();
+
+WordLink WLink;
 
 int main()
 {
 	GameIntro(); // TODO add some ASCII art
 
-	// Run the game
 	PlayGame();
 
 	// TODO Provide summary of the game
@@ -37,24 +39,23 @@ void GameIntro()
 void PlayGame()
 {
 	LogStatAndAskNewWord();
-	return;
 }
 
 void LogStatAndAskNewWord()
 {
-
 	LogStatusBar();
-	AskNewWord();
+	std::cout << "Current Word: PLACEHOLDER || New Word: ";
+
+	WLink.SetNewWord(AskNewWord()); // Get Player input and set it as the New Word.
 }
 
 // Waits for Player's input for the new word.
-void AskNewWord()
+std::string AskNewWord()
 {
-	std::cout << "Current Word: PLACEHOLDER || New Word: ";
 	//set NewWord from player input.
 	std::string NewWord = "";
 	std::getline(std::cin, NewWord);
-	
+	return NewWord;
 }
 
 // Logs player's remaining attempts and # of words submitted
