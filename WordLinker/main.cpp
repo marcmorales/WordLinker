@@ -64,7 +64,7 @@ void LogStatAndAskNewWord()
 FText AskNewWord()
 {
 	//set NewWord from player input.
-	FText NewWord = "";
+	FText NewWord{" "};
 	std::getline(std::cin, NewWord);
 	return NewWord;
 }

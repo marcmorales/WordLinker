@@ -30,6 +30,7 @@ public:
 
 
 private:
+	//FString SubmittedWordList[100];
 	FString NewWord;
 	FString CurrentWord;
 	int32 Attempts;
