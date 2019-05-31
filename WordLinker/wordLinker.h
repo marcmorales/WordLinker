@@ -16,6 +16,7 @@ public:
 	void SetNewWord(FString);
 	void SetNewWordToList();
 	void SetCurrentWord(FString);
+	void SetReduceAttemptByOne();
 
 	// =======================================
 	// getters

@@ -21,6 +21,7 @@ void WordLink::Reset()
 void WordLink::SetNewWord(FString PlayerNewWord) { NewWord = PlayerNewWord; }
 void WordLink::SetNewWordToList() { WordList.push_back(NewWord); }
 void WordLink::SetCurrentWord(FString ValidPlayerNewWord) { CurrentWord = ValidPlayerNewWord; }
+void WordLink::SetReduceAttemptByOne() { --Attempts; }
 
 // Getters
 FString WordLink::GetNewWord() const { return NewWord; }
@@ -39,7 +40,7 @@ bool WordLink::bNewWordLetterValid() const
 
 bool WordLink::bCheckNewWordNotInList() const
 {
-	size_t WordListSize{ WordList.size() }; 
+	int32 WordListSize(WordList.size()) ; 
 	for (int32 i{ 0 }; i < WordListSize; ++i)
 	{
 		if (NewWord == WordList[i]) return false;

@@ -47,19 +47,22 @@ void PlayGame()
 		LogStatAndAskNewWord();
 		if (bValidateNewWord())
 		{
-			// TODO 1.) If valid, Log the stat and ask player for another word
+			
 			std::cout << "You entered: " << WLink.GetNewWord() << ". + 5 points.\n\n";
 			WLink.SetNewWordToList(); // add new word to the list of words.
 			WLink.SetCurrentWord(WLink.GetNewWord()); // sets the valid new word as the current word
 		}
 		else
 		{
-			// TODO if not valid, check player stat
-			std::cout << "The word: " << WLink.GetNewWord() << " is NOT valid.\n\n";
+			// TODO * if not valid, check player stat
+			WLink.SetReduceAttemptByOne(); // reduces remaining attempt by 1.
+			std::cout << "The word: " << WLink.GetNewWord() << " is NOT valid.\n";
+			std::cout << "Attempt reduced by 1.\n\n";
+
 			// TODO if player still has enough attempt, Log the stat and ask player for another word*
 			// TODO if player exhausted all attempts, run the game's game over function (still to be made).
 		}
-	} while (true); // temp
+	} while (WLink.GetAttempts() >= 0); // temp
 
 }
 
