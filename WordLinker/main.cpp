@@ -47,13 +47,15 @@ void PlayGame()
 		LogStatAndAskNewWord();
 		if (bValidateNewWord())
 		{
-			// TODO If valid, Log the stat and ask player for another word*
-			std::cout << "The Word: " << WLink.GetNewWord() << " is valid.\n";
+			// TODO 1.) If valid, Log the stat and ask player for another word
+			std::cout << "You entered: " << WLink.GetNewWord() << ". + 5 points.\n\n";
+			WLink.SetNewWordToList(); // add new word to the list of words.
+			WLink.SetCurrentWord(WLink.GetNewWord()); // sets the valid new word as the current word
 		}
 		else
 		{
 			// TODO if not valid, check player stat
-			std::cout << "The Word: " << WLink.GetNewWord() << " is NOT valid.\n";
+			std::cout << "The word: " << WLink.GetNewWord() << " is NOT valid.\n\n";
 			// TODO if player still has enough attempt, Log the stat and ask player for another word*
 			// TODO if player exhausted all attempts, run the game's game over function (still to be made).
 		}
@@ -94,7 +96,7 @@ void LogStatusBar()
 
 	//status bar
 	std::cout << "-----------------------------------------" << std::endl;
-	std::cout << "| Attempts: " << WLink.GetAttempts() << " | # of Words Submitted: " << WLink.GetWordSubmitCount() << " |" << std::endl;
+	std::cout << "| Attempts: " << WLink.GetAttempts() << " | # of Words Submitted: " << WLink.GetWordListCount() << " |" << std::endl;
 	std::cout << "-----------------------------------------" << std::endl;
 	
 }
@@ -103,11 +105,10 @@ bool bValidateNewWord()
 {
 	if (WLink.bNewWordLetterValid()) // check if NewWord's 1st letter == to CurrentWord last letter
 	{
-		if (WLink.bCheckNewWordNotInList())
+		if (WLink.bCheckNewWordNotInList()) // check repeating word
 		{
-			WLink.SetNewWordToList();
 			return true;
 		}
 	}
-	return false; // if one of the check didnt run, meaning either letter is invalid or is a repeated word.
+	return false; // if one of the check didnt run, either letter is invalid or is a repeated word.
 }

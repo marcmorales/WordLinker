@@ -23,7 +23,7 @@ public:
 	FString GetNewWord() const;
 	FString GetCurrentWord() const;
 	int32 GetAttempts() const;
-	int32 GetWordSubmitCount() const;
+	int32 GetWordListCount() const;
 
 	// ======================================
 	// WordLink methods

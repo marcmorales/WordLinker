@@ -20,12 +20,13 @@ void WordLink::Reset()
 // Setters
 void WordLink::SetNewWord(FString PlayerNewWord) { NewWord = PlayerNewWord; }
 void WordLink::SetNewWordToList() { WordList.push_back(NewWord); }
+void WordLink::SetCurrentWord(FString ValidPlayerNewWord) { CurrentWord = ValidPlayerNewWord; }
 
 // Getters
 FString WordLink::GetNewWord() const { return NewWord; }
 FString WordLink::GetCurrentWord() const { return CurrentWord; }
 int32 WordLink::GetAttempts() const { return Attempts; }
-int32 WordLink::GetWordSubmitCount() const { return PlayerPoints; }
+int32 WordLink::GetWordListCount() const { return WordList.size() - 1; } // -1 due to the initial word should not be counted
 
 
 bool WordLink::bNewWordLetterValid() const
@@ -39,7 +40,7 @@ bool WordLink::bNewWordLetterValid() const
 bool WordLink::bCheckNewWordNotInList() const
 {
 	size_t WordListSize{ WordList.size() }; 
-	for (int32 i = 0; i < WordListSize; ++i)
+	for (int32 i{ 0 }; i < WordListSize; ++i)
 	{
 		if (NewWord == WordList[i]) return false;
 	}
