@@ -14,6 +14,7 @@ public:
 	// setters
 	
 	void SetNewWord(FString);
+	void SetNewWordToList();
 	void SetCurrentWord(FString);
 
 	// =======================================
@@ -24,17 +25,29 @@ public:
 	int32 GetAttempts() const;
 	int32 GetWordSubmitCount() const;
 
+	// ======================================
+	// WordLink methods
+
 	// check New Word's first letter if its equal to the current word's last letter.
-	bool bFirstLtrCheck() const;
+	bool bNewWordLetterValid() const;
+
+	// verify if the New word is already on the list
+	bool bCheckNewWordNotInList() const;
+	
 	void Reset(); // TODO reset the game when initialized and if the player chose to restart the game after winning or losing.
 
 
 private:
-	//FString SubmittedWordList[100];
+	// variables for all the words
 	FString NewWord;
 	FString CurrentWord;
+	std::vector <FString> WordList;
+
+	// player status
 	int32 Attempts;
 	int32 PlayerPoints;
-	int32 WordCount;
+	
+	
+
 
 };

@@ -1,20 +1,25 @@
 #pragma once
-#include <cctype>
 #include <iostream>
-#include <cstring>
-#include <cstdio>
 #include "wordLinker.h"
 
 // Constructor
-WordLink::WordLink() : 
-	NewWord(" "), 
-	CurrentWord("Ant"), // TODO create an array of words and randomize initial word
-	Attempts(2), 
-	PlayerPoints(0) 
-{}
+WordLink::WordLink() { Reset(); }
+
+void WordLink::Reset()
+{
+	// Word related objects/variables
+	NewWord = " ";
+	CurrentWord = "ant"; // TODO. Pull a random word from a list of words
+	WordList.push_back(CurrentWord); // initialize WordList with the current Word
+
+	// Player status
+	Attempts = 2;
+	PlayerPoints = 0;
+}
 
 // Setters
 void WordLink::SetNewWord(FString PlayerNewWord) { NewWord = PlayerNewWord; }
+void WordLink::SetNewWordToList() { WordList.push_back(NewWord); }
 
 // Getters
 FString WordLink::GetNewWord() const { return NewWord; }
@@ -23,7 +28,7 @@ int32 WordLink::GetAttempts() const { return Attempts; }
 int32 WordLink::GetWordSubmitCount() const { return PlayerPoints; }
 
 
-bool WordLink::bFirstLtrCheck() const
+bool WordLink::bNewWordLetterValid() const
 {
 	// this statement returns true if the first letter of the new word and the last letter of current word matches
 	// we need to -1 due to how array counts from 0. The .length() returns 3.
@@ -31,3 +36,12 @@ bool WordLink::bFirstLtrCheck() const
 	return false;
 }
 
+bool WordLink::bCheckNewWordNotInList() const
+{
+	size_t WordListSize{ WordList.size() }; 
+	for (int32 i = 0; i < WordListSize; ++i)
+	{
+		if (NewWord == WordList[i]) return false;
+	}
+	return true;
+}
