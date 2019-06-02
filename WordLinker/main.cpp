@@ -54,10 +54,15 @@ void PlayGame()
 		}
 		else
 		{
-			// TODO * if not valid, check player stat
+			// TODO if not valid, check player stat
 			WLink.SetReduceAttemptByOne(); // reduces remaining attempt by 1.
 			std::cout << "The word: " << WLink.GetNewWord() << " is NOT valid.\n";
-			std::cout << "Attempt reduced by 1.\n\n";
+			
+			// TODO* fixing attempts being printed
+			if (WLink.GetAttempts() >= 0)
+				std::cout << "Attempt reduced by 1.\n\n";
+			else
+				std::cout << "####Game Over####\n\n"; // TOOD make a better game over information
 
 			// TODO if player still has enough attempt, Log the stat and ask player for another word*
 			// TODO if player exhausted all attempts, run the game's game over function (still to be made).
