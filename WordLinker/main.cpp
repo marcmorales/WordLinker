@@ -11,6 +11,7 @@ using FText = std::string;
 void GameIntro();
 void PlayGame();
 void GameSummary();
+bool bAskPlayAgain();
 
 void PrintGameFeedback(EWordStatus);
 void PrintStatAndAskNewWord();
@@ -21,10 +22,13 @@ WordLink WLink;
 
 int32 main()
 {
-	GameIntro(); // TODO add some ASCII art
-	PlayGame();
-	GameSummary();
-	// TODO Ask if the player wants to play the game again
+	do
+	{
+		WLink.Reset();
+		GameIntro();
+		PlayGame();
+		GameSummary();
+	} while (bAskPlayAgain());
 
 	return 0;
 }
@@ -32,6 +36,10 @@ int32 main()
 // Game's welcome introduction and gives instruction how to play the game
 void GameIntro()
 {
+	std::cout << "     _ _ _ _____ _____ ____      __    _____ _____ _____ _____ _____     \n";
+	std::cout << " ___| | | |     | __  |    \\ ___|  |  |     |   | |  |  |   __| __  |___ \n";
+	std::cout << "|___| | | |  |  |    -|  |  |___|  |__|-   -| | | |    -|   __|    -|___|\n";
+	std::cout << "    |_____|_____|__|__|____/    |_____|_____|_|___|__|__|_____|__|__|    \n\n";
 	std::cout << "Welcome to Word Linker, a game where you connect words!" << std::endl;
 	std::cout << "How to play:" << std::endl;
 	std::cout << "- Take the last letter of the current word and use it as the first letter for the word you'll write." << std::endl;
@@ -89,6 +97,18 @@ void GameSummary()
 		}
 		std::cout << "Bronze winner!\n\n";
 	} 
+}
+
+bool bAskPlayAgain()
+{
+	std::cout << "Do you want to play again? (Y/N): ";
+	FText PlayerResponse;
+	std::getline(std::cin, PlayerResponse);
+	char LwrCaseResponse(tolower(PlayerResponse[0]));
+
+	if (LwrCaseResponse == 'Y' || LwrCaseResponse == 'y') return true;
+	else if (LwrCaseResponse == 'N' || LwrCaseResponse == 'n') return false;
+	else return false;
 }
 
 void PrintStatAndAskNewWord()
