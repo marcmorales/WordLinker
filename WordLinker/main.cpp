@@ -8,10 +8,10 @@ using FText = std::string;
 void GameIntro();
 void PlayGame();
 
-void LogStatAndAskNewWord();
+void PrintGameFeedback(EWordStatus);
+void PrintStatAndAskNewWord();
 FText AskNewWord();
 void LogStatusBar();
-//bool bValidateNewWord();
 
 WordLink WLink;
 
@@ -44,66 +44,16 @@ void PlayGame()
 {
 	do
 	{
-		LogStatAndAskNewWord(); // prints out player status
-
-		EWordStatus WordStatus(WLink.CheckWordValidity());
-		switch (WordStatus) // TODO * refactor this whole statement, too long to be in a single function
-		{
-		case EWordStatus::InvalidLetter:
-			std::cout << "You entered: " << WLink.GetNewWord() << ". Its first letter is invalid.\n";
-			std::cout << "Attempt -1.\n\n";
-			WLink.SetReduceAttemptByOne();
-			break;
-
-		case EWordStatus::RepeatingWord:
-			std::cout << "You entered: " << WLink.GetNewWord() << ". Its a repeated word.\n";
-			std::cout << "Attempt -1.\n\n";
-			WLink.SetReduceAttemptByOne();
-			break;
-
-		case EWordStatus::Pending:
-			std::cout << "You entered: " << WLink.GetNewWord() << ". Unrecognized input, please try again.(Pending still)\n\n";
-			break;
-
-		case EWordStatus::Valid:
-			std::cout << "You entered: " << WLink.GetNewWord() << ". #POINTS HERE#\n\n";
-			WLink.SetNewWordToList(); // add new word to the list of words.
-			WLink.SetCurrentWord(WLink.GetNewWord()); // sets the valid new word as the current word
-			break;
-
-		default:
-			std::cout << "You entered: " << WLink.GetNewWord() << ". Unkown input, please try again.\n\n";
-			break;
-		}
-		if (WLink.GetAttempts() < 0)
-			std::cout << "####Game Over####\n\n"; // TODO make a better game over information
-
-		//if (bValidateNewWord())
-		//{
-		//	
-		//	std::cout << "You entered: " << WLink.GetNewWord() << ".\n\n";
-		//	WLink.SetNewWordToList(); // add new word to the list of words.
-		//	WLink.SetCurrentWord(WLink.GetNewWord()); // sets the valid new word as the current word
-		//}
-		//else
-		//{
-		//	WLink.SetReduceAttemptByOne(); // reduces remaining attempt by 1.
-		//	std::cout << "The word: " << WLink.GetNewWord() << " is NOT valid.\n";
-		//				
-		//	if (WLink.GetAttempts() >= 0)
-		//		std::cout << "Attempt reduced by 1.\n\n";
-		//	else
-		//		std::cout << "####Game Over####\n\n"; // TODO make a better game over information
-		//}
+		PrintStatAndAskNewWord(); // prints out player status
 		
-		// TODO if player still has enough attempt, Log the stat and ask player for another word*
-		// TODO if player exhausted all attempts, run the game's game over function (still to be made).
+		EWordStatus WordStatus(WLink.CheckWordValidity());
+		PrintGameFeedback(WordStatus);
 
 	} while (WLink.GetAttempts() >= 0); // loop the game until attempt reaches 0.
 
 }
 
-void LogStatAndAskNewWord()
+void PrintStatAndAskNewWord()
 {
 	LogStatusBar();
 	std::cout << "Current Word: " << WLink.GetCurrentWord() << " || New Word: ";
@@ -139,16 +89,37 @@ void LogStatusBar()
 	
 }
 
-//bool bValidateNewWord()
-//{
-//	// I can probably return the enum WordStatus something to be usable here.....(brainstorming)
-//
-//	if (WLink.bNewWordLetterValid()) // check if NewWord's 1st letter == to CurrentWord last letter
-//	{
-//		if (WLink.bCheckNewWordNotInList()) // check repeating word
-//		{
-//			return true;
-//		}
-//	}
-//	return false; // if one of the check didnt run, either letter is invalid or is a repeated word.
-//}
+void PrintGameFeedback(EWordStatus WordStatus)
+{
+	switch (WordStatus) // TODO * refactor this whole statement, too long to be in a single function
+	{
+	case EWordStatus::InvalidLetter:
+		std::cout << "You entered: " << WLink.GetNewWord() << ". Its first letter is invalid.\n";
+		std::cout << "Attempt -1.\n\n";
+		WLink.SetReduceAttemptByOne();
+		break;
+
+	case EWordStatus::RepeatingWord:
+		std::cout << "You entered: " << WLink.GetNewWord() << ". Its a repeated word.\n";
+		std::cout << "Attempt -1.\n\n";
+		WLink.SetReduceAttemptByOne();
+		break;
+
+	case EWordStatus::Pending:
+		std::cout << "You entered: " << WLink.GetNewWord() << ". Unrecognized input, please try again.(Pending still)\n\n";
+		break;
+
+	case EWordStatus::Valid:
+		std::cout << "You entered: " << WLink.GetNewWord() << ". #POINTS HERE#\n\n";
+		WLink.SetNewWordToList(); // add new word to the list of words.
+		WLink.SetCurrentWord(WLink.GetNewWord()); // sets the valid new word as the current word
+		break;
+
+	default:
+		std::cout << "You entered: " << WLink.GetNewWord() << ". Unkown input, please try again.\n\n";
+		break;
+	}
+
+	if (WLink.GetAttempts() < 0)
+		std::cout << "####Game Over####\n\n"; // TODO make a better game over information
+}
