@@ -1,8 +1,13 @@
 #pragma once
-#include <iostream>
 #include "wordLinker.h"
 
-// Constructor
+// Values Given Per Game
+WordLinkMarks::WordLinkMarks() :
+	AttemptsPerGame(2),
+	PointPerValidWord(5)
+{}
+
+// Main Game Constructor
 WordLink::WordLink() { Reset(); }
 
 void WordLink::Reset()
@@ -13,8 +18,9 @@ void WordLink::Reset()
 	WordList.push_back(CurrentWord); // initialize WordList with the current Word
 
 	// Player status
-	Attempts = 2;
+	Attempts = GamePoints.AttemptsPerGame;
 	PlayerPoints = 0;
+	PointValue = GamePoints.PointPerValidWord;
 }
 
 // Setters
@@ -22,8 +28,10 @@ void WordLink::SetNewWord(FString PlayerNewWord) { NewWord = PlayerNewWord; }
 void WordLink::SetNewWordToList() { WordList.push_back(NewWord); }
 void WordLink::SetCurrentWord(FString ValidPlayerNewWord) { CurrentWord = ValidPlayerNewWord; }
 void WordLink::SetReduceAttemptByOne() { --Attempts; }
+void WordLink::SetPlayerPoint() { PlayerPoints += PointValue; }
 
 // Getters
+WordLinkMarks WordLink::GetWordLinkMarks() const { return GamePoints;  }
 FString WordLink::GetNewWord() const { return NewWord; }
 FString WordLink::GetCurrentWord() const { return CurrentWord; }
 int32 WordLink::GetAttempts() const { return Attempts; }
@@ -43,7 +51,6 @@ EWordStatus WordLink::CheckWordValidity()
 	}
 	return EWordStatus::InvalidLetter;
 }
-
 bool WordLink::bNewWordLetterValid() const
 {
 	// this statement returns true if the first letter of the new word and the last letter of current word matches
@@ -51,7 +58,6 @@ bool WordLink::bNewWordLetterValid() const
 	if (tolower(NewWord[0]) == tolower(CurrentWord[CurrentWord.length() - 1])) return true;
 	return false;
 }
-
 bool WordLink::bCheckNewWordNotInList() const
 {
 	int32 WordListSize(WordList.size()) ; 

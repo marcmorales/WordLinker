@@ -1,9 +1,12 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include "wordLinker.h"
 
+/*Unreal Engine 4 compliant*/
 using int32 = int;
 using FText = std::string;
+/*------------------------*/
 
 void GameIntro();
 void PlayGame();
@@ -18,10 +21,10 @@ WordLink WLink;
 int32 main()
 {
 	GameIntro(); // TODO add some ASCII art
-
 	PlayGame();
 
 	// TODO Provide summary of the game
+
 	// TODO Ask if the player wants to play the game again
 
 	return 0;
@@ -40,6 +43,7 @@ void GameIntro()
 	return;
 }
 
+// handles game loop, validation and feedback for each player input
 void PlayGame()
 {
 	do
@@ -91,17 +95,19 @@ void LogStatusBar()
 
 void PrintGameFeedback(EWordStatus WordStatus)
 {
-	switch (WordStatus) // TODO * refactor this whole statement, too long to be in a single function
+	switch (WordStatus)
 	{
 	case EWordStatus::InvalidLetter:
 		std::cout << "You entered: " << WLink.GetNewWord() << ". Its first letter is invalid.\n";
-		std::cout << "Attempt -1.\n\n";
+		if (WLink.GetAttempts() > 0) std::cout << "Attempt -1.\n\n";
+
 		WLink.SetReduceAttemptByOne();
 		break;
 
 	case EWordStatus::RepeatingWord:
 		std::cout << "You entered: " << WLink.GetNewWord() << ". Its a repeated word.\n";
-		std::cout << "Attempt -1.\n\n";
+		if (WLink.GetAttempts() > 0) std::cout << "Attempt -1.\n\n";
+
 		WLink.SetReduceAttemptByOne();
 		break;
 
@@ -110,7 +116,9 @@ void PrintGameFeedback(EWordStatus WordStatus)
 		break;
 
 	case EWordStatus::Valid:
-		std::cout << "You entered: " << WLink.GetNewWord() << ". #POINTS HERE#\n\n";
+		
+		std::cout << "You entered: " << WLink.GetNewWord() << ". Nice!\n\n";
+		WLink.SetPlayerPoint();
 		WLink.SetNewWordToList(); // add new word to the list of words.
 		WLink.SetCurrentWord(WLink.GetNewWord()); // sets the valid new word as the current word
 		break;
@@ -121,5 +129,12 @@ void PrintGameFeedback(EWordStatus WordStatus)
 	}
 
 	if (WLink.GetAttempts() < 0)
-		std::cout << "####Game Over####\n\n"; // TODO make a better game over information
+	{
+		std::cout << "  ___   __   _  _  ____     __   _  _  ____  ____ \n";
+		std::cout << " / __) / _\\ ( \\/ )(  __)   /  \\ / )( \\(  __)(  _ \\\n";
+		std::cout << "( (_ \\/    \\/ \\/ \\ ) _)   (  O )\\ \\/ / ) _)  )   /\n";
+		std::cout << " \\___/\\_/\\_/\\_)(_/(____)   \\__/  \\__/ (____)(__\\_)\n\n";
+
+	}
+		
 }
