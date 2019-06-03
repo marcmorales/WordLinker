@@ -10,7 +10,7 @@ WordLinkMarks::WordLinkMarks() :
 // Main Game Constructor
 WordLink::WordLink() { Reset(); }
 
-void WordLink::Reset()
+void WordLink::Reset() // TODO * Fix reset, not reseting total number of words submitted, need to clean up vector for word list as well
 {
 	// Word related objects/variables
 	NewWord = " ";
