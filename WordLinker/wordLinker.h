@@ -42,6 +42,7 @@ public:
 	FString GetCurrentWord() const;
 	int32 GetAttempts() const;
 	int32 GetWordListCount() const;
+	int32 GetPlayerPoints() const;
 	
 
 	// ======================================
@@ -55,15 +56,18 @@ public:
 	// verify if the New word is already on the list
 	bool bCheckNewWordNotInList() const;
 
-	void Reset(); // TODO reset the game when initialized and if the player chose to restart the game after winning or losing.
+	void Reset();
+
+	// =========================
+
+	std::vector <FString> WordList;
 
 
 private:
 	// variables for all the words
 	FString NewWord;
 	FString CurrentWord;
-	std::vector <FString> WordList;
-
+	
 	// player status
 	WordLinkMarks GamePoints;
 	int32 Attempts;

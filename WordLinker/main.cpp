@@ -10,6 +10,7 @@ using FText = std::string;
 
 void GameIntro();
 void PlayGame();
+void GameSummary();
 
 void PrintGameFeedback(EWordStatus);
 void PrintStatAndAskNewWord();
@@ -22,9 +23,7 @@ int32 main()
 {
 	GameIntro(); // TODO add some ASCII art
 	PlayGame();
-
-	// TODO Provide summary of the game
-
+	GameSummary();
 	// TODO Ask if the player wants to play the game again
 
 	return 0;
@@ -57,6 +56,41 @@ void PlayGame()
 
 }
 
+void GameSummary()
+{
+	// list all the words submitted
+	std::cout << "List of words you entered:\n";
+	for (int i(1); i <= WLink.GetWordListCount(); ++i)
+	{
+		std::cout << WLink.WordList[i];
+		if (i >= WLink.GetWordListCount()) std::cout << '.';
+		else std::cout << ", ";
+	}
+	std::cout << std::endl;
+
+	// print total number of words submitted
+	std::cout << "Total valid words submitted: " << WLink.GetWordListCount() << '\n';
+
+	// print player points
+	std::cout << "You're total points is: " << WLink.GetPlayerPoints() << '\n';
+
+	// final congratulation message
+	if (WLink.GetPlayerPoints() >= 50) 
+	{
+		if (WLink.GetPlayerPoints() >= 70) 
+		{
+			if (WLink.GetPlayerPoints() >= 100) 
+			{
+				std::cout << "Gold winner!!!\n\n";
+				return;
+			} 
+			std::cout << "Silver winner!!\n\n";
+			return;
+		}
+		std::cout << "Bronze winner!\n\n";
+	} 
+}
+
 void PrintStatAndAskNewWord()
 {
 	LogStatusBar();
@@ -79,7 +113,6 @@ void LogStatusBar()
 {
 	// Introduce the word the player will start with.
 	// Have a prominent status bar where the player can see how many attempts left and how many words they successfully submitted.
-	// TODO Have a word tracker that shows the previous, current and next word.
 
 	/* Should look like this:
 	| Attempts: 2 | Words Submitted: ## |
@@ -128,6 +161,7 @@ void PrintGameFeedback(EWordStatus WordStatus)
 		break;
 	}
 
+	// Game Over ASCII ART
 	if (WLink.GetAttempts() < 0)
 	{
 		std::cout << "  ___   __   _  _  ____     __   _  _  ____  ____ \n";

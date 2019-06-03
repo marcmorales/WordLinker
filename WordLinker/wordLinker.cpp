@@ -4,7 +4,7 @@
 // Values Given Per Game
 WordLinkMarks::WordLinkMarks() :
 	AttemptsPerGame(2),
-	PointPerValidWord(5)
+	PointPerValidWord(10)
 {}
 
 // Main Game Constructor
@@ -36,6 +36,7 @@ FString WordLink::GetNewWord() const { return NewWord; }
 FString WordLink::GetCurrentWord() const { return CurrentWord; }
 int32 WordLink::GetAttempts() const { return Attempts; }
 int32 WordLink::GetWordListCount() const { return WordList.size() - 1; } // -1 due to the initial word should not be counted
+int32 WordLink::GetPlayerPoints() const { return PlayerPoints;  }
 
 EWordStatus WordLink::CheckWordValidity()
 {
