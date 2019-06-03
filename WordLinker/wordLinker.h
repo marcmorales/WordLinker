@@ -5,6 +5,14 @@
 using int32 = int;
 using FString = std::string;
 
+enum class EWordStatus
+{
+	Valid,
+	InvalidLetter,
+	RepeatingWord,
+	Pending
+};
+
 class WordLink
 {
 public:
@@ -28,6 +36,8 @@ public:
 
 	// ======================================
 	// WordLink methods
+	
+	EWordStatus CheckWordValidity();
 
 	// check New Word's first letter if its equal to the current word's last letter.
 	bool bNewWordLetterValid() const;

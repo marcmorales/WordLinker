@@ -29,6 +29,20 @@ FString WordLink::GetCurrentWord() const { return CurrentWord; }
 int32 WordLink::GetAttempts() const { return Attempts; }
 int32 WordLink::GetWordListCount() const { return WordList.size() - 1; } // -1 due to the initial word should not be counted
 
+EWordStatus WordLink::CheckWordValidity()
+{
+	if (bNewWordLetterValid()) // check if NewWord's 1st letter == to CurrentWord last letter
+	{
+		// if letter is good
+		if (bCheckNewWordNotInList()) // check repeating word
+		{
+			// if not in list
+			return EWordStatus::Valid;
+		}
+		return EWordStatus::RepeatingWord;
+	}
+	return EWordStatus::InvalidLetter;
+}
 
 bool WordLink::bNewWordLetterValid() const
 {
