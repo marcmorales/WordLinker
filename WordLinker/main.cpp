@@ -24,7 +24,7 @@ int32 main()
 {
 	do
 	{
-		WordLink *pWordLink = new WordLink; // construct new game on initial and for every reset
+		WordLink *pWordLink(new WordLink); // construct new game on initial and for every reset
 
 		GameIntro();
 		PlayGame(pWordLink);

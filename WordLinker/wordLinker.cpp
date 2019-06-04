@@ -10,11 +10,11 @@ WordLinkMarks::WordLinkMarks() :
 // Main Game Constructor
 WordLink::WordLink() { Reset(); }
 
-void WordLink::Reset() // TODO * Fix reset, not reseting total number of words submitted, need to clean up vector for word list as well
+void WordLink::Reset()
 {
-	// Word related objects/variables
+	/* Word related objects/variables*/
 	NewWord = " ";
-	CurrentWord = "ant"; // TODO. Pull a random word from a list of words
+	CurrentWord = "ant"; // TODO * Pull a random word from a list of words, a local dictionary file and pull a word randomly.
 	WordList.push_back(CurrentWord); // initialize WordList with the current Word
 
 	// Player status

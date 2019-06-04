@@ -59,12 +59,12 @@ public:
 	void Reset();
 
 	// =========================
-
+	// Holds all the words submitted by the user including the initial word provided by the constructor
 	std::vector <FString> WordList;
 
 
 private:
-	// variables for all the words
+	/* variables for all the words */
 	FString NewWord;
 	FString CurrentWord;
 	
