@@ -3,7 +3,8 @@
 #include <string>
 #include "wordLinker.h"
 
-void GameSummary(WordLink *pWordLink)
+// Give player feedback after every game played.
+void GameSummary(WordLink *pWordLink) 
 {
 	// list all the words submitted
 	std::cout << "List of words you entered:\n";
