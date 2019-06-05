@@ -16,9 +16,7 @@ bool bAskPlayAgain();
 void PrintGameFeedback(EWordStatus, WordLink*);
 void PrintStatAndAskNewWord(WordLink*);
 FText AskNewWord();
-void LogStatusBar(WordLink*);
-
-
+void PrintStatusBar(WordLink*);
 
 int32 main()
 {
@@ -31,6 +29,7 @@ int32 main()
 		GameSummary(pWordLink);
 
 		delete pWordLink;
+		pWordLink = nullptr;
 
 	} while (bAskPlayAgain());
 
@@ -57,52 +56,14 @@ void GameIntro()
 // handles game loop, validation and feedback for each player input
 void PlayGame(WordLink *pWordLink)
 {
-	
 	do
 	{
-		PrintStatAndAskNewWord(pWordLink); // prints out player status
+		PrintStatAndAskNewWord(pWordLink); // TODO separate two action into two different functions
 		
 		EWordStatus WordStatus(pWordLink->CheckWordValidity());
 		PrintGameFeedback(WordStatus, pWordLink);
 
 	} while (pWordLink->GetAttempts() >= 0); // loop the game until attempt reaches 0.
-
-	
-}
-
-void GameSummary(WordLink *pWordLink)
-{
-	// list all the words submitted
-	std::cout << "List of words you entered:\n";
-	for (int i(1); i <= pWordLink->GetWordListCount(); ++i)
-	{
-		std::cout << pWordLink->WordList[i];
-		if (i >= pWordLink->GetWordListCount()) std::cout << '.';
-		else std::cout << ", ";
-	}
-	std::cout << std::endl;
-
-	// print total number of words submitted
-	std::cout << "Total valid words submitted: " << pWordLink->GetWordListCount() << '\n';
-
-	// print player points
-	std::cout << "You're total points is: " << pWordLink->GetPlayerPoints() << '\n';
-
-	// final congratulation message
-	if (pWordLink->GetPlayerPoints() >= 50)
-	{
-		if (pWordLink->GetPlayerPoints() >= 70)
-		{
-			if (pWordLink->GetPlayerPoints() >= 100)
-			{
-				std::cout << "Gold winner!!!\n\n";
-				return;
-			} 
-			std::cout << "Silver winner!!\n\n";
-			return;
-		}
-		std::cout << "Bronze winner!\n\n";
-	} 
 }
 
 bool bAskPlayAgain()
@@ -119,7 +80,7 @@ bool bAskPlayAgain()
 
 void PrintStatAndAskNewWord(WordLink *pWordLink)
 {
-	LogStatusBar(pWordLink);
+	PrintStatusBar(pWordLink);
 	std::cout << "Current Word: " << pWordLink->GetCurrentWord() << " || New Word: ";
 
 	pWordLink->SetNewWord(AskNewWord()); // Get Player input and set it as the New Word.
@@ -132,69 +93,4 @@ FText AskNewWord()
 	FText NewWord{" "};
 	std::getline(std::cin, NewWord);
 	return NewWord;
-}
-
-// Logs player's remaining attempts and # of words submitted
-void LogStatusBar(WordLink *pWordLink)
-{
-	// Introduce the word the player will start with.
-	// Have a prominent status bar where the player can see how many attempts left and how many words they successfully submitted.
-
-	/* Should look like this:
-	| Attempts: 2 | Words Submitted: ## |
-	Current word: Null || Next word:
-	*/
-
-	//status bar
-	std::cout << "-----------------------------------------" << std::endl;
-	std::cout << "| Attempts: " << pWordLink->GetAttempts() << " | # of Words Submitted: " << pWordLink->GetWordListCount() << " |" << std::endl;
-	std::cout << "-----------------------------------------" << std::endl;
-	
-}
-
-void PrintGameFeedback(EWordStatus WordStatus, WordLink *pWordLink)
-{
-	switch (WordStatus)
-	{
-	case EWordStatus::InvalidLetter:
-		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Its first letter is invalid.\n";
-		if (pWordLink->GetAttempts() > 0) std::cout << "Attempt -1.\n\n";
-
-		pWordLink->SetReduceAttemptByOne();
-		break;
-
-	case EWordStatus::RepeatingWord:
-		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Its a repeated word.\n";
-		if (pWordLink->GetAttempts() > 0) std::cout << "Attempt -1.\n\n";
-
-		pWordLink->SetReduceAttemptByOne();
-		break;
-
-	case EWordStatus::Pending:
-		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Unrecognized input, please try again.(Pending still)\n\n";
-		break;
-
-	case EWordStatus::Valid:
-		
-		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Nice!\n\n";
-		pWordLink->SetPlayerPoint();
-		pWordLink->SetNewWordToList(); // add new word to the list of words.
-		pWordLink->SetCurrentWord(pWordLink->GetNewWord()); // sets the valid new word as the current word
-		break;
-
-	default:
-		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Unknown input, please try again.\n\n";
-		break;
-	}
-
-	// Game Over ASCII ART
-	if (pWordLink->GetAttempts() < 0)
-	{
-		std::cout << "  ___   __   _  _  ____     __   _  _  ____  ____ \n";
-		std::cout << " / __) / _\\ ( \\/ )(  __)   /  \\ / )( \\(  __)(  _ \\\n";
-		std::cout << "( (_ \\/    \\/ \\/ \\ ) _)   (  O )\\ \\/ / ) _)  )   /\n";
-		std::cout << " \\___/\\_/\\_/\\_)(_/(____)   \\__/  \\__/ (____)(__\\_)\n\n";
-
-	}
-		
 }
