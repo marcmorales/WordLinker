@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include "wordLinker.h"
+#include "dictionary.h"
+
 
 /*Unreal Engine 4 compliant*/
 using int32 = int;
@@ -24,10 +26,16 @@ int32 main()
 	{
 		WordLink *pWordLink(new WordLink); // construct new game on initial and for every reset
 
+		/*TROUBLESHOOTING*/
+		WordLinkDictionary::MITDictionary MyDictionary; // my dictionary object
+		MyDictionary.bVerifyWordInDictionary();
+		/*TROUBLESHOOTING*/
+
 		GameIntro();
 		PlayGame(pWordLink);
 		GameSummary(pWordLink);
 
+		// clean up after each game played.
 		delete pWordLink;
 		pWordLink = nullptr;
 

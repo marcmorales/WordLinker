@@ -2,6 +2,7 @@
 #include <cctype>
 #include <vector>
 
+
 using int32 = int;
 using FString = std::string;
 
@@ -10,6 +11,7 @@ enum class EWordStatus
 	Valid,
 	InvalidLetter,
 	RepeatingWord,
+	NotInDictionary,
 	Pending
 };
 

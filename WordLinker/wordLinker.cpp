@@ -13,14 +13,17 @@ WordLink::WordLink() { Reset(); }
 void WordLink::Reset()
 {
 	/* Word related objects/variables*/
-	NewWord = " ";
-	CurrentWord = "ant"; // TODO * Pull a random word from a list of words, a local dictionary file and pull a word randomly.
-	WordList.push_back(CurrentWord); // initialize WordList with the current Word
+	this->NewWord = " ";
+	this->CurrentWord = "ant"; // TODO * Pull a random word from a list of words, a local dictionary file and pull a word randomly.
+	this->WordList.push_back(CurrentWord); // initialize WordList with the current Word
 
 	// Player status
-	Attempts = GamePoints.AttemptsPerGame;
-	PlayerPoints = 0;
-	PointValue = GamePoints.PointPerValidWord;
+	this->Attempts = GamePoints.AttemptsPerGame;
+	this->PlayerPoints = 0;
+	this->PointValue = GamePoints.PointPerValidWord;
+
+	// Dictionary construction
+
 }
 
 // Setters
@@ -48,9 +51,10 @@ EWordStatus WordLink::CheckWordValidity()
 			// if not in list
 			return EWordStatus::Valid;
 		}
-		return EWordStatus::RepeatingWord;
+
+		return EWordStatus::RepeatingWord; // if bCheckNewWordNotInList() return false
 	}
-	return EWordStatus::InvalidLetter;
+	return EWordStatus::InvalidLetter; // if bNewWordLetterValid() return false
 }
 bool WordLink::bNewWordLetterValid() const
 {
