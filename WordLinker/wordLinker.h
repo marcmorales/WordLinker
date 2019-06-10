@@ -12,6 +12,7 @@ enum class EWordStatus
 	InvalidLetter,
 	RepeatingWord,
 	NotInDictionary,
+	IsInDictionary,
 	Pending
 };
 

@@ -11,7 +11,7 @@ using FText = std::string;
 /*------------------------*/
 
 void GameIntro();
-void PlayGame(WordLink*);
+void PlayGame(WordLink*, WordLinkDictionary::MITDictionary&);
 void GameSummary(WordLink*);
 bool bAskPlayAgain();
 
@@ -25,14 +25,10 @@ int32 main()
 	do
 	{
 		WordLink *pWordLink(new WordLink); // construct new game on initial and for every reset
-
-		/*TROUBLESHOOTING*/
 		WordLinkDictionary::MITDictionary MyDictionary; // my dictionary object
-		MyDictionary.bVerifyWordInDictionary();
-		/*TROUBLESHOOTING*/
 
 		GameIntro();
-		PlayGame(pWordLink);
+		PlayGame(pWordLink, MyDictionary);
 		GameSummary(pWordLink);
 
 		// clean up after each game played.
@@ -62,13 +58,22 @@ void GameIntro()
 }
 
 // handles game loop, validation and feedback for each player input
-void PlayGame(WordLink *pWordLink)
+void PlayGame(WordLink *pWordLink, WordLinkDictionary::MITDictionary &MyDictionary)
 {
 	do
 	{
 		PrintStatAndAskNewWord(pWordLink); // TODO separate two action into two different functions
 		
 		EWordStatus WordStatus(pWordLink->CheckWordValidity());
+
+		if (WordStatus == EWordStatus::Valid)
+		{
+			if (MyDictionary.bVerifyWordInDictionary(pWordLink)) // pass the newWord to the dictionary class
+				WordStatus = EWordStatus::IsInDictionary;
+			else
+				WordStatus = EWordStatus::NotInDictionary;
+		}
+
 		PrintGameFeedback(WordStatus, pWordLink);
 
 	} while (pWordLink->GetAttempts() >= 0); // loop the game until attempt reaches 0.

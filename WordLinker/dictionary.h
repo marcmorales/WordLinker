@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "wordLinker.h"
 
 using FString = std::string;
 using int32 = int;
@@ -15,7 +16,7 @@ namespace WordLinkDictionary
 		void doOpenMitDictionary();
 		void doCloseMitDictionary();
 
-		bool bVerifyWordInDictionary();
+		bool bVerifyWordInDictionary(WordLink*);
 
 	private:
 		std::ifstream dictionary;

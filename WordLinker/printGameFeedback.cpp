@@ -27,10 +27,24 @@ void PrintGameFeedback(EWordStatus WordStatus, WordLink *pWordLink)
 
 	case EWordStatus::Valid:
 
+		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Valid input but its an unrecognized word.\n\n";
+		if (pWordLink->GetAttempts() > 0) std::cout << "Attempt -1.\n\n";
+
+		pWordLink->SetReduceAttemptByOne();
+		break;
+
+	case EWordStatus::IsInDictionary:
 		std::cout << "You entered: " << pWordLink->GetNewWord() << ". Nice!\n\n";
 		pWordLink->SetPlayerPoint();
 		pWordLink->SetNewWordToList(); // add new word to the list of words.
 		pWordLink->SetCurrentWord(pWordLink->GetNewWord()); // sets the valid new word as the current word
+		break;
+
+	case EWordStatus::NotInDictionary:
+		std::cout << "You entered: " << pWordLink->GetNewWord() << ". But its not in our dictionary!\n\n";
+		if (pWordLink->GetAttempts() > 0) std::cout << "Attempt -1.\n\n";
+
+		pWordLink->SetReduceAttemptByOne();
 		break;
 
 	default:

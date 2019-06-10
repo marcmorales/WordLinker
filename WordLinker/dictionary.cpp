@@ -29,15 +29,17 @@ void WordLinkDictionary::MITDictionary::doCloseMitDictionary()
 	return;
 }
 
-bool WordLinkDictionary::MITDictionary::bVerifyWordInDictionary()
+bool WordLinkDictionary::MITDictionary::bVerifyWordInDictionary(WordLink *pWordLink)
 {
-	int32 count(0);
+	// TODO * create a loop and check the player submitted word is valid from the dictionary.
+	dictionary.seekg(0);
+
 	while (!(this->dictionary.eof()))
 	{
-		++count;
-		dictionary >> wordFromDictionary;
-		std::cout << wordFromDictionary << '\n';
+		this->dictionary >> wordFromDictionary;
+		//std::cout << wordFromDictionary << '\n'; // verified logging all 10k words.
+		if (wordFromDictionary == pWordLink->GetNewWord())
+			return true;
 	}
-	
 	return false;
 }

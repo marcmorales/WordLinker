@@ -14,7 +14,7 @@ void WordLink::Reset()
 {
 	/* Word related objects/variables*/
 	this->NewWord = " ";
-	this->CurrentWord = "ant"; // TODO * Pull a random word from a list of words, a local dictionary file and pull a word randomly.
+	this->CurrentWord = "ant"; // TODO Pull a random word from a list of words, a local dictionary file and pull a word randomly.
 	this->WordList.push_back(CurrentWord); // initialize WordList with the current Word
 
 	// Player status
