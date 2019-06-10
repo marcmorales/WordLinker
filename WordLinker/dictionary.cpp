@@ -32,7 +32,7 @@ void WordLinkDictionary::MITDictionary::doCloseMitDictionary()
 bool WordLinkDictionary::MITDictionary::bVerifyWordInDictionary(WordLink *pWordLink)
 {
 	// TODO * create a loop and check the player submitted word is valid from the dictionary.
-	dictionary.seekg(0);
+	this->dictionary.seekg(0); // resets dictionary's input position to the very beginning.
 
 	while (!(this->dictionary.eof()))
 	{
