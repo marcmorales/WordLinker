@@ -25,7 +25,7 @@ int32 main()
 	do
 	{
 		WordLink *pWordLink(new WordLink); // construct new game on initial and for every reset
-		WordLinkDictionary::MITDictionary MyDictionary; // my dictionary object
+		WordLinkDictionary::MITDictionary MyDictionary; // my dictionary object // TODO, see if you can implement this over to the heap memory.
 
 		GameIntro();
 		PlayGame(pWordLink, MyDictionary);
@@ -34,8 +34,8 @@ int32 main()
 		// clean up after each game played.
 		delete pWordLink;
 		pWordLink = nullptr;
-
-	} while (bAskPlayAgain());
+	} 
+	while (bAskPlayAgain());
 
 	return 0;
 }

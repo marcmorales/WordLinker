@@ -1,29 +1,27 @@
 #pragma once
 #include "wordLinker.h"
 
+// Main Game Constructor
+WordLink::WordLink() { Reset(); }
+
 // Values Given Per Game
 WordLinkMarks::WordLinkMarks() :
 	AttemptsPerGame(2),
 	PointPerValidWord(10)
 {}
 
-// Main Game Constructor
-WordLink::WordLink() { Reset(); }
-
+// set initial value for the game
 void WordLink::Reset()
 {
-	/* Word related objects/variables*/
+	/* Word related objects/variables */
 	this->NewWord = " ";
-	this->CurrentWord = "ant"; // TODO Pull a random word from a list of words, a local dictionary file and pull a word randomly.
+	this->CurrentWord = "ant"; // TODO* Pull a random word from a list of words, a local dictionary file and pull a word randomly.
 	this->WordList.push_back(CurrentWord); // initialize WordList with the current Word
 
 	// Player status
 	this->Attempts = GamePoints.AttemptsPerGame;
 	this->PlayerPoints = 0;
 	this->PointValue = GamePoints.PointPerValidWord;
-
-	// Dictionary construction
-
 }
 
 // Setters
@@ -38,7 +36,7 @@ WordLinkMarks WordLink::GetWordLinkMarks() const { return GamePoints;  }
 FString WordLink::GetNewWord() const { return NewWord; }
 FString WordLink::GetCurrentWord() const { return CurrentWord; }
 int32 WordLink::GetAttempts() const { return Attempts; }
-int32 WordLink::GetWordListCount() const { return WordList.size() - 1; } // -1 due to the initial word should not be counted
+int32 WordLink::GetWordListCount() const { return WordList.size() - 1; } // -1, initial word not counted. Supplied by the game.
 int32 WordLink::GetPlayerPoints() const { return PlayerPoints;  }
 
 EWordStatus WordLink::CheckWordValidity()
@@ -49,13 +47,13 @@ EWordStatus WordLink::CheckWordValidity()
 		if (bCheckNewWordNotInList()) // check repeating word
 		{
 			// if not in list
-			return EWordStatus::Valid;
+			return EWordStatus::Valid; // all checks are good.
 		}
-
 		return EWordStatus::RepeatingWord; // if bCheckNewWordNotInList() return false
 	}
 	return EWordStatus::InvalidLetter; // if bNewWordLetterValid() return false
 }
+
 bool WordLink::bNewWordLetterValid() const
 {
 	// this statement returns true if the first letter of the new word and the last letter of current word matches

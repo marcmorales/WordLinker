@@ -8,12 +8,13 @@ using FString = std::string;
 
 enum class EWordStatus
 {
-	Valid,
-	InvalidLetter,
+	Pending,
+	InvalidLetter, 
 	RepeatingWord,
+	Valid,
 	NotInDictionary,
-	IsInDictionary,
-	Pending
+	IsInDictionary
+	
 };
 
 struct WordLinkMarks
@@ -51,6 +52,7 @@ public:
 	// ======================================
 	// WordLink methods
 
+	// returns an enum value to determine players submitted word falls under game's instruction
 	EWordStatus CheckWordValidity();
 
 	// check New Word's first letter if its equal to the current word's last letter.
